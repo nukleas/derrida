@@ -1,0 +1,20 @@
+
+URLs
+-----
+http://google.com
+
+Processed URLs
+-----
+http://google.com|Google
+
+Quotes
+-----
+"I really like stuff,"
+"It's kinda cool."
+
+DOIs
+-----
+
+Keywords
+-----
+one~two~three
