@@ -20,17 +20,21 @@
 #
 import re
 
+extraction_template = {
+}
+
 class Extractor(object):
-    def __init__(self, extraction_dict):
+    def __init__(self, extraction_dict=None):
         # Load defaults as defined in extraction_template
         self.__dict__.update(extraction_template)
         # Override template defaults using provided dict
-        self.__dict__.update(extraction_dict)
+        if extraction_dict:
+            self.__dict__.update(extraction_dict)
 
     def extractByRegexFrom(self,text, regex=None):
         output_list = []
         if regex is None:
-            if self.regex:
+            if hasattr(self, 'regex'):
                 regex = self.regex
             else:
                 raise KeyError("Regex is missing from extractor.")
@@ -38,3 +42,17 @@ class Extractor(object):
             to_append = found.group()
             output_list.append(to_append)
         return output_list
+
+class Test(object):
+    def mockExtractor(self):
+        # test if can instantiate
+        derp = Extractor()
+        # test if can extract
+        print derp.extractByRegexFrom("THIS IS A TEST", "TEST")
+        try:
+            print derp.extractByRegexFrom("THIS IS A TEST")
+        except KeyError:
+            print "Perfect, it broke!"
+
+test = Test()
+test.mockExtractor()
