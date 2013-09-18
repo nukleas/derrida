@@ -18,7 +18,23 @@
 #
 # Pretentious? Sure, but let's get to the code.
 #
-
+import re
 
 class Extractor(object):
-    pass
+    def __init__(self, extraction_dict):
+        # Load defaults as defined in extraction_template
+        self.__dict__.update(extraction_template)
+        # Override template defaults using provided dict
+        self.__dict__.update(extraction_dict)
+
+    def extractByRegexFrom(self,text, regex=None):
+        output_list = []
+        if regex is None:
+            if self.regex:
+                regex = self.regex
+            else:
+                raise KeyError("Regex is missing from extractor.")
+        for found in re.finditer(regex, text):
+            to_append = found.group()
+            output_list.append(to_append)
+        return output_list
